@@ -18,14 +18,13 @@ Carefully heed the user's instructions.
 Respond using Markdown.`;
 
 export const modelOptions: ModelOptions[] = [
+  'gpt-4o-mini',
+  'o1-mini',
+  'o1-preview',
   'gpt-3.5-turbo',
   'gpt-3.5-turbo-16k',
   'gpt-3.5-turbo-1106',
   'gpt-3.5-turbo-0125',
-  'gpt-4',
-  'gpt-4-32k',
-  'gpt-4-1106-preview',
-  'gpt-4-0125-preview',
   'gpt-4-turbo',
   'gpt-4-turbo-2024-04-09',
   'gpt-4o',
@@ -33,6 +32,10 @@ export const modelOptions: ModelOptions[] = [
   // 'gpt-3.5-turbo-0301',
   // 'gpt-4-0314',
   // 'gpt-4-32k-0314',
+  // 'gpt-4',
+  // 'gpt-4-32k',
+  // 'gpt-4-1106-preview',
+  // 'gpt-4-0125-preview',
 ];
 
 export const defaultModel = 'gpt-3.5-turbo';
@@ -57,6 +60,9 @@ export const modelMaxToken = {
   'gpt-4-turbo-2024-04-09': 128000,
   'gpt-4o': 128000,
   'gpt-4o-2024-05-13': 128000,
+  'gpt-4o-mini': 128000,
+  'o1-mini': 128000,
+  'o1-preview': 128000,
 };
 
 export const modelCost = {
@@ -136,8 +142,27 @@ export const modelCost = {
     prompt: { price: 0.005, unit: 1000 },
     completion: { price: 0.015, unit: 1000 },
   },
+  'gpt-4o-mini': {
+    prompt: { price: 0.00015, unit: 1000 },
+    completion: { price: 0.0006, unit: 1000 },
+  },
+  'o1-mini': {
+    prompt: { price: 0.003, unit: 1000 },
+    completion: { price: 0.012, unit: 1000 },
+  },
+  'o1-preview': {
+    prompt: { price: 0.015, unit: 1000 },
+    completion: { price: 0.06, unit: 1000 },
+  },
 };
-
+//Falta contabilizar os reasonings tokens, talvez não seja necessário
+// "usage": {
+//     "prompt_tokens": 24,
+//     "completion_tokens": 2643,
+//     "total_tokens": 2667,
+//     "completion_tokens_details": {
+//         "reasoning_tokens": 1152
+//     }
 export const defaultUserMaxToken = 4000;
 
 export const _defaultChatConfig: ConfigInterface = {

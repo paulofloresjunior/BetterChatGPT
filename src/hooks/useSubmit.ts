@@ -100,7 +100,11 @@ const useSubmit = () => {
         );
       }
 
-      if (stream) {
+      var useStream =
+        chats[currentChatIndex].config.model !== 'o1-mini' &&
+        chats[currentChatIndex].config.model !== 'o1-preview';
+      //if (stream) {
+      if (useStream && stream) {
         if (stream.locked)
           throw new Error(
             'Oops, the stream is locked right now. Please try again'
@@ -143,6 +147,15 @@ const useSubmit = () => {
         }
         reader.releaseLock();
         stream.cancel();
+      } else {
+        const resultString = stream;
+
+        const updatedChats: ChatInterface[] = JSON.parse(
+          JSON.stringify(useStore.getState().chats)
+        );
+        const updatedMessages = updatedChats[currentChatIndex].messages;
+        updatedMessages[updatedMessages.length - 1].content += resultString;
+        setChats(updatedChats);
       }
 
       // update tokens used in chatting

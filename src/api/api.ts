@@ -95,7 +95,8 @@ export const getChatCompletionStream = async (
       endpoint += path;
     }
   }
-
+  var useStream = config.model !== 'o1-mini' && config.model !== 'o1-preview';
+  
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
@@ -103,7 +104,7 @@ export const getChatCompletionStream = async (
       messages,
       ...config,
       max_tokens: undefined,
-      stream: true,
+      stream: useStream,
     }),
   });
   if (response.status === 404 || response.status === 405) {
@@ -132,8 +133,16 @@ export const getChatCompletionStream = async (
     }
     throw new Error(error);
   }
-
-  const stream = response.body;
+  let stream;
+  if (!useStream) {
+    console.log('Entrei aqui');
+    var res = await response.text();
+    console.log('res', res);
+    stream = JSON.parse(res).choices[0].message.content;
+    console.log(JSON.parse(res).choices[0].message.content);
+  } else {
+    stream = response.body;
+  }
   return stream;
 };
 
